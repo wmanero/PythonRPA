@@ -1,0 +1,104 @@
+COMANDOS PYTHON
+
+Trabalhando com diretórios e arquivos
+
+import os
+
+os.getcwd()
+'C:\\WINDOWS\\System32'
+
+os.getcwd()
+'C:\\Users\\Riartts\\OneDrive\\Documentos\\Curso RPA\\Python\\desafios py\\Desafio 1'
+
+os.listdir()
+['calc_imc.py', 'calc_imc.zip']
+
+os.getcwd() - Mostra diretório atual
+os.chdir(r'....') - Altera diretório
+os.listdir() - Mostra lista de arquivos dentro do diretório atual
+os.rename("arquivo.txt", "novonome.txt") - Renomeia arquivo
+os.remove('novo_arquivo.txt') - Remove arquivo
+
+import glob
+
+glob.glob(r'.\*.txt') - Procurar arquivos e pastas
+
+
+import shutil
+
+shutil.move(r'arquivo_atual.txt', r'.\nova-pasta\arquivo_atual_2.txt') - Move arquivo e pode salvar também com o novo nome.
+
+shutil.copy('exemplo.txt', r'.\pasta-nova\exemplo.txt')
+
+##########################################################
+
+Trabalhando com Arquivos - Leitura e Escrita
+
+Criando um arquivo para escrita
+
+arquivo = open('log_2024_09.log', "w")
+         
+arquivo.write('Este é um arquivo para ser escrito.')
+         
+arquivo.close()
+
+Abrindo o arquivo para leitura
+        
+arquivo = open('log_2024_09.log', "r")
+                
+arquivo.read()
+         
+'Este é um arquivo para ser escrito.'
+arquivo.close()
+
+Utilizando context para finalizar (fechar o arquivo ao final da execução do bloco)
+         
+with open('log_2024_09.log', 'a') as arquivo:
+         arquivo.write('\nEste é um novo TEXTO!!!!!')
+
+
+#####################################################
+
+Arquivo de imagem
+
+
+
+
+################# INSPECIONANDO PÁGINA WEB - CSS SELECTOR #######################
+
+
+Localizar por ID
+#valor
+
+div#valor
+
+Localizar por CLASS
+.valor
+div.valor
+
+Localizar com TAG
+
+input[class="valor"]
+
+Localizar com DIV
+
+div[class="valor"] input
+
+input[valuer*="Pesquisar"]
+
+input[title="Pesquisar"]
+
+
+################# INSPECIONANDO PÁGINA WEB - XPATH #######################
+
+//*[@id="valor"]
+
+//div[@id="valor"]
+
+Com hierarquia
+
+//div[@class="valor"]/div/div[2]/input
+
+//div[text()="Texto"]
+
+//div[contains(text()."Texto")]

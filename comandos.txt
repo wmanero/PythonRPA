@@ -1,0 +1,72 @@
+COMANDOS PYTHON
+
+Trabalhando com diretórios e arquivos
+
+import os
+
+os.getcwd()
+'C:\\WINDOWS\\System32'
+
+os.getcwd()
+'C:\\Users\\Riartts\\OneDrive\\Documentos\\Curso RPA\\Python\\desafios py\\Desafio 1'
+
+os.listdir()
+['calc_imc.py', 'calc_imc.zip']
+
+os.getcwd() - Mostra diretório atual
+os.chdir(r'....') - Altera diretório
+os.listdir() - Mostra lista de arquivos dentro do diretório atual
+os.rename("arquivo.txt", "novonome.txt") - Renomeia arquivo
+os.remove('novo_arquivo.txt') - Remove arquivo
+
+import glob
+
+glob.glob(r'.\*.txt') - Procurar arquivos e pastas
+
+
+import shutil
+
+shutil.move(r'arquivo_atual.txt', r'.\nova-pasta\arquivo_atual_2.txt') - Move arquivo e pode salvar também com o novo nome.
+
+shutil.copy('exemplo.txt', r'.\pasta-nova\exemplo.txt')
+
+##########################################################
+
+Trabalhando com Arquivos - Leitura e Escrita
+
+Criando um arquivo para escrita
+
+arquivo = open('log_2024_09.log', "w")
+         
+arquivo.write('Este é um arquivo para ser escrito.')
+         
+arquivo.close()
+
+Abrindo o arquivo para leitura
+        
+arquivo = open('log_2024_09.log', "r")
+                
+arquivo.read()
+         
+'Este é um arquivo para ser escrito.'
+arquivo.close()
+
+Utilizando context para finalizar (fechar o arquivo ao final da execução do bloco)
+         
+with open('log_2024_09.log', 'a') as arquivo:
+         arquivo.write('\nEste é um novo TEXTO!!!!!')
+
+
+bold = wb.add_format({'bold': 1})
+
+#####################################################
+
+Arquivo de imagem
+
+with open('imagem.jpg', 'rb') as arquivo imagem:
+	imagem = open.read()
+
+print(imagem)
+
+
+
