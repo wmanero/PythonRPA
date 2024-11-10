@@ -8,6 +8,7 @@ Created on Wed Oct 30 20:11:11 2024
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from openpyxl import Workbook, load_workbook
+from selenium.common.exceptions import NoSuchElementException
 import time
 
 #Invoca o método By
@@ -15,6 +16,8 @@ from selenium.webdriver.common.by import By
 
 def inserir_dados_arq(arquivo, dados):
     # Nome arquivo e dados        
+    print(type(dados))
+    
     try:
         # Carregar arquivo existente ou cria novo
         try:
@@ -26,6 +29,7 @@ def inserir_dados_arq(arquivo, dados):
         
         # Inserir dados na próxima linha vazia
         for linha in dados:
+            print(linha)
             ws.append(linha)
             
         # Salvar arquivo
@@ -51,99 +55,101 @@ def pesquisa(s):
     
     # cod seção
     cod_secao = driver.find_element(By.XPATH, f'//*[@id="tbEstrutura"]/tbody/tr[{s}]/td[1]/a').text
-    print(cod_secao)
-    
+    dados.append([cod_secao])
+
+    # nome seção
+    nome_secao = driver.find_element(By.XPATH, '//*[@id="tbEstrutura"]/tbody/tr[1]/td[3]').text
+    dados.append([nome_secao])
+    time.sleep(2)
+
     #clica no link da seção
     driver.find_element(By.XPATH, f'//*[@id="tbEstrutura"]/tbody/tr[{s}]/td[1]/a').click()
     time.sleep(2)
-
-    #rola tela até divisão 01
+    
+    #rola tela até seção da divisão
     driver.find_element(By.XPATH, '//*[@id="hierarquia"]/table/tbody/tr[1]/td[1]/span').location_once_scrolled_into_view
     time.sleep(2)
     
-    # nome da divisão 01
-    nome_divisao_01 = driver.find_element(By.XPATH, '//*[@id="hierarquia"]/table/tbody/tr[1]/td[3]/span').text
-    print(nome_divisao_01)
     # cod divisão 01
-    cod_divisao = driver.find_element(By.XPATH, '//*[@id="hierarquia"]/table/tbody/tr[2]/td[3]/a').text
- 
-    # nome da divisão 02
-    nome_divisao_02 = driver.find_element(By.XPATH, '//*[@id="hierarquia"]/table/tbody/tr[2]/td[3]').text  
-    print(nome_divisao_02)
+    cod_divisao_01 = driver.find_element(By.XPATH, '//*[@id="hierarquia"]/table/tbody/tr[2]/td[3]/a').text
+    dados.append([cod_divisao_01])
+
+    # nome da divisão 01
+    nome_divisao_01 = driver.find_element(By.XPATH, '//*[@id="hierarquia"]/table/tbody/tr[2]/td[3]').text
+    dados.append([nome_divisao_01])
+    
     #clica na divisão 01
     driver.find_element(By.XPATH, '//*[@id="hierarquia"]/table/tbody/tr[2]/td[3]/a').click()
     time.sleep(2)
     
-    #rolar tela até seção
+    #rolar tela até seção do grupo
     driver.find_element(By.XPATH, '//*[@id="hierarquia"]/table/tbody/tr[1]/td[1]/span').location_once_scrolled_into_view
     time.sleep(2)
     
     # cod do grupo
     cod_grupo = driver.find_element(By.XPATH, '//*[@id="hierarquia"]/table/tbody/tr[3]/td[3]/a').text
-    print(cod_grupo)
+    dados.append([cod_grupo])
+
     # nome do grupo
     nome_grupo = driver.find_element(By.XPATH, '//*[@id="hierarquia"]/table/tbody/tr[3]/td[3]').text
-    print(nome_grupo)
+
     #clica no grupo
     driver.find_element(By.XPATH, '//*[@id="hierarquia"]/table/tbody/tr[3]/td[3]/a').click()
     time.sleep(2)
     
-    #rola tela seção
+    #rola tela seção da classe
     driver.find_element(By.XPATH, '//*[@id="hierarquia"]/table/tbody/tr[1]/td[1]/span').location_once_scrolled_into_view
     time.sleep(2)
     
     # cod classe
     cod_classe = driver.find_element(By.XPATH, '//*[@id="hierarquia"]/table/tbody/tr[4]/td[3]/a').text
-    print(cod_classe)
+    dados.append([cod_classe])
+
     # nome classe
     nome_classe = driver.find_element(By.XPATH, '//*[@id="hierarquia"]/table/tbody/tr[4]/td[3]').text
-    print(nome_classe)
+    dados.append([nome_classe])
+
     #clica no cod da classe
     driver.find_element(By.XPATH, '//*[@id="hierarquia"]/table/tbody/tr[4]/td[3]/a').click()
     time.sleep(2)
+
+    dados.append([cod_secao, nome_classe, cod_divisao_01, nome_divisao_01, cod_grupo, nome_grupo, cod_classe, nome_classe])
     
     # subclasse
     
-    #rola tela até classe
+    #rola tela até subclasse
     driver.find_element(By.XPATH, '//*[@id="hierarquia"]/table/tbody/tr[5]/td[1]/span').location_once_scrolled_into_view
     time.sleep(2)
- 
-    dados = [cod_secao, cod_divisao, nome_divisao_01, nome_divisao_02, cod_grupo, nome_grupo, cod_classe, nome_classe]  
- 
-    try:
-        if s == 1:
-            x = 9
-        elif s == 2:
-            x = 7
-        else:
-            x = 10
-            
-        for i in range(5, x):
+  
+    if s == 1:
+        x = 9
+    elif s == 2:
+        x = 7
+    else:
+        x = 10
+    
+    for i in range(5, x):
+        try:
             # cod subclasse 1
-            cod_subclasse_01 = driver.find_element(By.XPATH, f'//*[@id="hierarquia"]/table/tbody/tr[{i}]/td[3]/a').text
-            print(cod_subclasse_01)
+            cod_sub_01 = driver.find_element(By.XPATH, f'//*[@id="hierarquia"]/table/tbody/tr[{i}]/td[3]/a').text
+            dados.append([cod_sub_01])
             # nome subclasse 1
-            nome_subclasse_01 = driver.find_element(By.XPATH, f'//*[@id="hierarquia"]/table/tbody/tr[{i}]/td[3]').text
-            print(nome_subclasse_01)
-            
-            dados.append[cod_subclasse_01, nome_subclasse_01]
+            nome_sub_01 = driver.find_element(By.XPATH, f'//*[@id="hierarquia"]/table/tbody/tr[{i}]/td[3]').text
+            dados.append([nome_sub_01])
 
-    except Exception as e:
-        print(f'Ocorreu o erro: {e}')
+        except NoSuchElementException:
+            print(f'Elemento {i} não encontrado.')
+            break
+        finally:
+            inserir_dados_arq('relatorio.xlsx', dados)   
+            dados.clear()
+            
+    print(dados)   
     
-    finally:
-        print("Consulta finalizada.")
-        print(dados)
-    
-    
-        #dados = [cod_secao, cod_divisao, nome_divisao_01, nome_divisao_02, cod_grupo, nome_grupo, cod_classe, nome_classe]#, cod_subclasse_01, nome_subclasse_01]
-        
-        #print(dados)
-        #inserir_dados_arq('relatorio.xlsx', dados)  
-        
-        #dados.clear()
+
    
-        driver.quit()
+    driver.quit()
+    
 
 def todos():
     for i in range(1,4):
@@ -170,7 +176,7 @@ def secao():
     if opcao == 4:
         todos()
         
-    elif opcao == 5:
+    elif opcao == 5 or opcao < 1:
         print("Até mais...")
          
     elif opcao < 4:
@@ -181,6 +187,7 @@ def secao():
           
         
 secao()    
+
 
 
 
